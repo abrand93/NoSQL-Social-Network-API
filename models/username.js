@@ -8,9 +8,15 @@ const usernameSchema = new Schema({
     },
     email:{
         type: String,
-        required: "email is Required",
+        required: true,
         unique: true,
-        match: `/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/`
+        match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+    },
+    created:{
+        type:Date,
+        default:Date.now,
+        get: created => moment(created).format('MMM DD, YYYY [at] h:mm:a')
+        
     },
     thoughts:[
         {
@@ -18,6 +24,7 @@ const usernameSchema = new Schema({
             ref: 'Thoughts'
 
         }
+    
     ],
     friends:[{
         type: Schema.Types.ObjectId,
@@ -34,7 +41,7 @@ const usernameSchema = new Schema({
       },
 
 )
-UserSchema.virtual("friendCount").get(function () {
+usernameSchema.virtual("friendCount").get(function () {
     return this.friends.length;
 })
 

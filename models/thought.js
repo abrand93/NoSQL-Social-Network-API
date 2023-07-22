@@ -41,14 +41,14 @@ const thoughtsSchema = new Schema({
         type: Date,
 
     },
-    username:{
+    userName:{
         type: String,
         required: true,
     },
     reactions:[ReactionSchema],
 
 })
-ThoughtsSchema.virtual("reactionCount").get(function(){
+thoughtsSchema.virtual("reactionCount").get(function(){
     return this.reactions.length
 })
 const Thoughts = model('Thoughts', thoughtsSchema)

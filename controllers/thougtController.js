@@ -89,7 +89,22 @@ module.exports = {
           .catch((err) => res.json(err));
       },
   updateSingleThought(req,res){
-
+   Thoughts.findOneAndUpdate(
+    {_id: req.params.thoughtId},
+    {$set: req.body},
+    { runValidators: true, new: true }
+   )  .select('-__v')
+   .then(async (thought) =>
+     !thought
+       ? res.status(404).json({ message: 'No thought with that ID' })
+       : res.json({
+           thought,
+           })
+   )
+   .catch((err) => {
+     console.log(err);
+     return res.status(500).json(err);
+   })
   },
       
 deleteSingleThought(req, res) {

@@ -28,11 +28,12 @@ module.exports = {
           });
       },
 
-      createReaction({body},res){
+      createReaction(req,res){
         Thoughts.findOneAndUpdate(
-            {_id: body.thoughtId },
-            {$push: {reactions: _id}},
+            { _id: req.params.thoughtId },
+            { $addToSet: { reactions: req.body } },
             { runValidators: true, new: true }
+        
         )
         .then(async (reactions) =>
             !reactions
@@ -48,8 +49,27 @@ module.exports = {
 
       },
 
-
-
+      
+      deleteReaction(req, res){
+        Thoughts.findOneAndUpdate(
+            {_id: req.params.thoughtId},
+            {$pull: {reactions: {reactionId: req.params.reactionId}}},
+            { runValidators: true, new: true },
+        
+        )
+        .select('-__v')
+        .then(async (reaction) =>
+          !reaction
+            ? res.status(404).json({ message: 'No Thoughts with that ID' })
+            : res.json({
+                reaction,
+                })
+        )
+        .catch((err) => {
+          console.log(err);
+          return res.status(500).json(err);
+        })
+      },
   createThought({body}, res) {
         Thoughts.create(body)
           .then(({_id}) => {
@@ -68,7 +88,9 @@ module.exports = {
         )
           .catch((err) => res.json(err));
       },
-    
+  updateSingleThought(req,res){
+
+  },
       
 deleteSingleThought(req, res) {
     Thoughts.findOneAndRemove({ _id: req.params.thoughtId })

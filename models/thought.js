@@ -4,6 +4,7 @@ const { Schema, model, Types } = require('mongoose');
 
 
 const ReactionSchema = new Schema({
+  
     reactionId:{
 type:Schema.Types.ObjectId,
 default:()=> new Types.ObjectId(),
@@ -24,7 +25,7 @@ default:()=> new Types.ObjectId(),
         virtuals: true,
     },
     
-        id:false,
+        _id: false,
     
 }
 )
@@ -45,9 +46,20 @@ const thoughtsSchema = new Schema({
         type: String,
         required: true,
     },
-    reactions:[ReactionSchema],
-
-})
+    reactions: [ReactionSchema],
+ 
+},
+{
+    toJSON:{
+        virtuals: true,
+    },
+    
+        id: false,
+    
+}
+)
+// usernameSchema.virtual("friendCount").get(function () {
+//     return this.friends.length;})
 thoughtsSchema.virtual("reactionCount").get(function(){
     return this.reactions.length
 })

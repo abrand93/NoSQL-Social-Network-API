@@ -18,11 +18,18 @@ default:()=> new Types.ObjectId(),
     username:{
         type: String,
         required: true,
-    }
+    },
+    createdAt:{
+        type:Date,
+        default:Date.now,
+        get: createdAt => date.toDateString(createdAt)
+    },
+
 },
 {
     toJSON:{
         virtuals: true,
+        getters: true
     },
     
         _id: false,
@@ -38,9 +45,12 @@ const thoughtsSchema = new Schema({
         minlength: 1,
         maxlength: 280,
     },
-    createdAt:{
-        type: Date,
-
+  
+        createdAt:{
+            type:Date,
+            default:Date.now,
+            get: createdAt => date.toDateString(createdAt)
+        
     },
     userName:{
         type: String,
@@ -52,6 +62,7 @@ const thoughtsSchema = new Schema({
 {
     toJSON:{
         virtuals: true,
+        getters: true
     },
     
         id: false,

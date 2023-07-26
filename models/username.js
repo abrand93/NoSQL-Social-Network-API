@@ -1,4 +1,5 @@
 const { Schema, model, Types } = require('mongoose');
+var date = new Date()
 
 const usernameSchema = new Schema({
     userName:{
@@ -12,10 +13,10 @@ const usernameSchema = new Schema({
         unique: true,
         match: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
     },
-    created:{
+    createdAt:{
         type:Date,
         default:Date.now,
-        get: created => moment(created).format('MMM DD, YYYY [at] h:mm:a')
+        get: createdAt => date.toDateString(createdAt)
         
     },
     thoughts:[
@@ -36,6 +37,7 @@ const usernameSchema = new Schema({
     {
         toJSON: {
           virtuals: true,
+          getters: true
         },
         id: false,
       },

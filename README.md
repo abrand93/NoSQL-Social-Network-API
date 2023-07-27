@@ -41,3 +41,6 @@
   * GitHub Profile: [GitHub Link](https://github.com/abrand93)
   *  If you have any questions please contact me at: abrandstrom93@gmail.com
 
+  ## Video
+  [Untitled_ Jul 26 2023 10_06 PM.webm](https://github.com/abrand93/NoSQL-Social-Network-API/assets/125417439/a4933354-f23d-49e7-988f-1f162e8b3c6e)
+
